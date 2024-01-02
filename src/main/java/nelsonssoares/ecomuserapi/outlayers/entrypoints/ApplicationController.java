@@ -2,9 +2,11 @@ package nelsonssoares.ecomuserapi.outlayers.entrypoints;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
+import nelsonssoares.ecomuserapi.services.UsuarioService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import static nelsonssoares.ecomuserapi.constants.ControllerConstants.API_BASE_URL;
 import static nelsonssoares.ecomuserapi.constants.ControllerConstants.API_PRODUCES;
@@ -16,6 +18,12 @@ import static nelsonssoares.ecomuserapi.constants.ControllerConstants.API_PRODUC
 //@SecurityRequirement(name = "bearer-key")
 public class ApplicationController {
 
+    private final UsuarioService usuarioService;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<UsuarioDTO> salvar(@RequestBody UsuarioDTO dto) {
+        return usuarioService.salvar(dto);
+    }
 
 }

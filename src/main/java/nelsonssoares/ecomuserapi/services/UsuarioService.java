@@ -2,13 +2,14 @@ package nelsonssoares.ecomuserapi.services;
 
 import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 public interface UsuarioService {
-    ResponseEntity<Usuario> salvar (UsuarioDTO dto);
+    ResponseEntity<UsuarioDTO> salvar (UsuarioDTO dto);
 
     ResponseEntity<List<UsuarioDTO>> buscarTodos(Pageable paginacao);
 
