@@ -1,11 +1,12 @@
 package nelsonssoares.ecomuserapi.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import nelsonssoares.ecomuserapi.constraints.Constraints;
 import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
-import nelsonssoares.ecomuserapi.domain.repository.UsuarioRepository;
+import nelsonssoares.ecomuserapi.domain.entities.enums.PerguntaAtivo;
 import nelsonssoares.ecomuserapi.services.UsuarioService;
+import nelsonssoares.ecomuserapi.usecases.GetAllUsuarios;
+import nelsonssoares.ecomuserapi.usecases.GetUsuarioById;
 import nelsonssoares.ecomuserapi.usecases.SaveUsuario;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,19 +20,11 @@ import java.util.List;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final SaveUsuario saveUsuario;
-    private final UsuarioRepository usuarioRepository;
-
+    private final GetAllUsuarios getAllUsuarios;
+    private final GetUsuarioById getUsuarioById;
     @Override
     public ResponseEntity<UsuarioDTO> salvar(UsuarioDTO dto) {
 
-        List<Usuario> usuarios = usuarioRepository.findAll();
-
-        boolean result = Constraints.cpfExistente(usuarios, dto);
-        System.out.println(result);
-
-        if(result == true) {
-            throw new RuntimeException("CPF Já cadastrado! " + HttpStatus.CONFLICT);
-        }
         UsuarioDTO usuario = saveUsuario.execute(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
@@ -39,12 +32,26 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public ResponseEntity<List<UsuarioDTO>> buscarTodos(Pageable paginacao) {
-        return null;
+
+        List<UsuarioDTO> usuarios = getAllUsuarios.execute(paginacao);
+
+        if(usuarios.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(usuarios);
     }
 
     @Override
     public ResponseEntity<Usuario> buscarPorId(Integer id) {
-        return null;
+        Usuario usuario = getUsuarioById.execute(id);
+
+        if(usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }else if(usuario.getAtivo().equals(PerguntaAtivo.SIM)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(usuario);
     }
 
     @Override
