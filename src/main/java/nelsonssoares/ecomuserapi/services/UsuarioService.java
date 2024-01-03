@@ -4,7 +4,6 @@ import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
