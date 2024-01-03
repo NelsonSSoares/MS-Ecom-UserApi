@@ -15,7 +15,13 @@ public class GetUsuarioById {
 
     public Usuario execute(Integer id) {
 
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        return usuario.orElse(null);
+        Usuario usuario = usuarioRepository.findById(id).get();
+
+        if(usuario == null) {
+            return null;
+        }else {
+            return usuario;
+        }
+
     }
 }

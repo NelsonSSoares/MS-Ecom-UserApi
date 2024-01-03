@@ -43,11 +43,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public ResponseEntity<Usuario> buscarPorId(Integer id) {
+        System.out.println(id);
         Usuario usuario = getUsuarioById.execute(id);
-
+        System.out.println(usuario);
         if(usuario == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else if(usuario.getAtivo().equals(PerguntaAtivo.SIM)) {
+        }else if(usuario.getAtivo().equals(PerguntaAtivo.NAO)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
