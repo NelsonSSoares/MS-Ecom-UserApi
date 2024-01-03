@@ -5,7 +5,7 @@ import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
 import nelsonssoares.ecomuserapi.domain.entities.enums.PerguntaAtivo;
 import nelsonssoares.ecomuserapi.services.UsuarioService;
-import nelsonssoares.ecomuserapi.usecases.*;
+import nelsonssoares.ecomuserapi.usecases.usuario.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

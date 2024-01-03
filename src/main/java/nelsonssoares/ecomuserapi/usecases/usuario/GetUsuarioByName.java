@@ -1,4 +1,4 @@
-package nelsonssoares.ecomuserapi.usecases;
+package nelsonssoares.ecomuserapi.usecases.usuario;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
