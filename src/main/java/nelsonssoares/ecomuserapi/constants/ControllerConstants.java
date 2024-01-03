@@ -12,5 +12,8 @@ public class ControllerConstants {
     public static final String ID = "/{id}";
     public static final String CPF = "/cpf/{cpf}";
 
+    public static final String NAME = "/nome/{nome}";
+    public static final String ATIVAR = "/active/{id}";
+
 
 }

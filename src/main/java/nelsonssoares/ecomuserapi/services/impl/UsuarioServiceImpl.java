@@ -22,6 +22,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final GetUsuarioById getUsuarioById;
     private final UpdateUsuario updateUsuario;
     private final DeleteUsuario deleteUsuario;
+    private final GetUsuarioByName getUsuarioByName;
+    private final GetUsuarioByCpf getUsuarioByCpf;
+    private final GetUsuarioByEmail getUsuarioByEmail;
+    private final ActiveUsuario activeUsuario;
 
     @Override
     public ResponseEntity<UsuarioDTO> salvar(UsuarioDTO dto) {
@@ -44,9 +48,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public ResponseEntity<Usuario> buscarPorId(Integer id) {
-        System.out.println(id);
+
         Usuario usuario = getUsuarioById.execute(id);
-        System.out.println(usuario);
+
         if(usuario == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }else if(usuario.getAtivo().equals(PerguntaAtivo.NAO)) {
@@ -84,22 +88,34 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<List<Usuario>> encontrarPorNome(String nome) {
-        return null;
+    public ResponseEntity<List<UsuarioDTO>> encontrarPorNome(String nome) {
+
+        List<UsuarioDTO> usuarios = getUsuarioByName.execute(nome);
+
+        return usuarios.isEmpty() ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.ok(usuarios);
     }
 
     @Override
     public ResponseEntity<Usuario> encontrarPorCpf(String cpf) {
-        return null;
+
+        Usuario usuario = getUsuarioByCpf.execute(cpf);
+
+        return usuario == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() : ResponseEntity.ok(usuario);
     }
 
     @Override
     public ResponseEntity<Usuario> reativarUsuario(Integer id) {
-        return null;
+
+        Usuario usuario = activeUsuario.execute(id);
+
+        return usuario == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() : ResponseEntity.ok(usuario);
     }
 
     @Override
-    public ResponseEntity<Usuario> findByEmail(String email) {
-        return null;
+    public ResponseEntity<UsuarioDTO> findByEmail(String email) {
+
+        UsuarioDTO usuario = getUsuarioByEmail.execute(email);
+
+        return usuario == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() : ResponseEntity.ok(usuario);
     }
 }
