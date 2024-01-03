@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static nelsonssoares.ecomuserapi.constants.ControllerConstants.*;
+import static nelsonssoares.ecomuserapi.constants.UsuarioControllerConstants.*;
 
 @Tag(name = API_TAG)
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = API_BASE_URL, produces = API_PRODUCES)
 //@SecurityRequirement(name = API_SECURITY_REQUIREMENT)
-public class ApplicationController {
+public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
@@ -146,6 +146,7 @@ public class ApplicationController {
     @GetMapping(value = CPF)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Usuario> buscarPorCpf(@PathVariable("cpf") String cpf) {
+        //Retornar 409 quando usuario ja estiver ativo
         return usuarioService.encontrarPorCpf(cpf);
     }
 

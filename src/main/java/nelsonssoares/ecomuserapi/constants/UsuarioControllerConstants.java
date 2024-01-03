@@ -1,6 +1,6 @@
 package nelsonssoares.ecomuserapi.constants;
 
-public class ControllerConstants {
+public class UsuarioControllerConstants {
     public static final String API_TAG = "Ecommerce - User API";
     public static final String API_PRODUCES = "application/json";
     public static final String API_SECURITY_REQUIREMENT = "bearer-key";

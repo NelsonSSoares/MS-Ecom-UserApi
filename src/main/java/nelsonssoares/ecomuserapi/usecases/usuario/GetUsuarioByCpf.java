@@ -1,4 +1,4 @@
-package nelsonssoares.ecomuserapi.usecases;
+package nelsonssoares.ecomuserapi.usecases.usuario;
 
 import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
