@@ -18,12 +18,12 @@ public interface UsuarioService {
 
     ResponseEntity<Usuario> deletarUsuario(Integer id);
 
-    ResponseEntity<List<Usuario>> encontrarPorNome(String nome);
+    ResponseEntity<List<UsuarioDTO>> encontrarPorNome(String nome);
 
     ResponseEntity<Usuario> encontrarPorCpf(String cpf);
 
     ResponseEntity<Usuario> reativarUsuario(Integer id);
 
-    ResponseEntity<Usuario> findByEmail(String email);
+    ResponseEntity<UsuarioDTO> findByEmail(String email);
 
 }
