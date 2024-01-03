@@ -10,5 +10,7 @@ public class ControllerConstants {
     public static final String API_BASE_URL = "ecommerce/usuarios";
     public static final String EMAIL = "/email/{email}";
     public static final String ID = "/{id}";
+    public static final String CPF = "/cpf/{cpf}";
+
 
 }

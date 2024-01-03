@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
@@ -38,7 +39,7 @@ public class ApplicationController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UsuarioDTO> salvar(@RequestBody UsuarioDTO dto) {
+    public ResponseEntity<UsuarioDTO> salvar(@RequestBody  @Valid UsuarioDTO dto) {
         return usuarioService.salvar(dto);
     }
 
@@ -73,5 +74,33 @@ public class ApplicationController {
     }
 
 
+    @Operation(summary = "Metodo para atualizar usuário existente", method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Usuário atualizado com sucesso!!"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidos!"),
+            @ApiResponse(responseCode = "403", description = "Não Autorizado!"),
+            @ApiResponse(responseCode = "401", description = "Usuário não autenticado!"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválido"),
+            @ApiResponse(responseCode = "500", description = "Erro ao atualizar usuário!"),
+    })
+    @PutMapping(value = ID)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable("id") Integer id, @RequestBody @Valid UsuarioDTO userDTO) {
+        return usuarioService.atualizarUsuario(id, userDTO);
+    }
+
+
+    @Operation(summary = "Metodo para excluir usuário existente", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Usuário excluido com sucesso!!"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidos!"),
+            @ApiResponse(responseCode = "403", description = "Não Autorizado!"),
+            @ApiResponse(responseCode = "401", description = "Usuário não autenticado!"),
+    })
+    @DeleteMapping(value = ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Usuario> deletarUsuario(@PathVariable("id") Integer id) {
+        return usuarioService.deletarUsuario(id);
+    }
 
 }

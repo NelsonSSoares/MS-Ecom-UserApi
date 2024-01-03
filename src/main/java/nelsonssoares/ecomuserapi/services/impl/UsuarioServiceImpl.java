@@ -5,9 +5,7 @@ import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
 import nelsonssoares.ecomuserapi.domain.entities.enums.PerguntaAtivo;
 import nelsonssoares.ecomuserapi.services.UsuarioService;
-import nelsonssoares.ecomuserapi.usecases.GetAllUsuarios;
-import nelsonssoares.ecomuserapi.usecases.GetUsuarioById;
-import nelsonssoares.ecomuserapi.usecases.SaveUsuario;
+import nelsonssoares.ecomuserapi.usecases.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +20,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final SaveUsuario saveUsuario;
     private final GetAllUsuarios getAllUsuarios;
     private final GetUsuarioById getUsuarioById;
+    private final UpdateUsuario updateUsuario;
+    private final DeleteUsuario deleteUsuario;
+
     @Override
     public ResponseEntity<UsuarioDTO> salvar(UsuarioDTO dto) {
 
@@ -43,11 +44,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public ResponseEntity<Usuario> buscarPorId(Integer id) {
+        System.out.println(id);
         Usuario usuario = getUsuarioById.execute(id);
-
+        System.out.println(usuario);
         if(usuario == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else if(usuario.getAtivo().equals(PerguntaAtivo.SIM)) {
+        }else if(usuario.getAtivo().equals(PerguntaAtivo.NAO)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
@@ -56,12 +58,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public ResponseEntity<Usuario> atualizarUsuario(Integer id, UsuarioDTO userDTO) {
-        return null;
+
+        Usuario usuario = updateUsuario.execute(id, userDTO);
+
+        if(usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else if (usuario.getAtivo().equals(PerguntaAtivo.NAO)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(usuario);
     }
 
     @Override
     public ResponseEntity<Usuario> deletarUsuario(Integer id) {
-        return null;
+        Usuario usuario = deleteUsuario.execute(id);
+
+        if(usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else if (usuario.getAtivo().equals(PerguntaAtivo.NAO)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Override
