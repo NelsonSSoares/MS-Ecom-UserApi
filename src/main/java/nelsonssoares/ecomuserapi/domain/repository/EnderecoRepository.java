@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//@Repository
-//public interface EnderecoRepository extends JpaRepository<Endereco, Integer> {
+@Repository
+public interface EnderecoRepository extends JpaRepository<Endereco, Integer> {
 //    List<Endereco> findByUsuarioId(Integer usuarioId);
-//}
+}

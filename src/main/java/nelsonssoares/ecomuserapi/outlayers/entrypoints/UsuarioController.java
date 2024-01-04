@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static nelsonssoares.ecomuserapi.constants.UsuarioControllerConstants.*;
+import static nelsonssoares.ecomuserapi.constants.ControllersConstants.*;
 
-@Tag(name = API_TAG)
+@Tag(name = API_TAG, description = API_DESCRIPTIONgit )
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = API_BASE_URL, produces = API_PRODUCES)
@@ -71,7 +71,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "409", description = "Usuário já ativo!"),
             @ApiResponse(responseCode = "500", description = "Erro ao atualizar usuário!"),
     })
-    @PutMapping(value = ATIVAR)
+    @PutMapping(value = ACTIVE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Usuario> ativarUsuario(@PathVariable("id") Integer id) {
         return usuarioService.reativarUsuario(id);
