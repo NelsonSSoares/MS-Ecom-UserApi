@@ -13,7 +13,8 @@ public class GetAllEndereco {
 
     private final EnderecoRepository enderecoRepository;
 
-    public void execute() {
+    public List<Endereco> execute() {
       List<Endereco> enderecos = enderecoRepository.findAll();
+        return enderecos;
     }
 }

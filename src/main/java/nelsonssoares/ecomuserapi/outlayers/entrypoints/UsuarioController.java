@@ -18,7 +18,7 @@ import java.util.List;
 
 import static nelsonssoares.ecomuserapi.constants.ControllersConstants.*;
 
-@Tag(name = API_TAG)
+@Tag(name = API_TAG, description = API_DESCRIPTIONgit )
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = API_BASE_URL, produces = API_PRODUCES)
