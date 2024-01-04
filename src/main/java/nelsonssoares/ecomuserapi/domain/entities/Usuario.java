@@ -16,7 +16,7 @@ import java.time.LocalDate;
     @AllArgsConstructor
     @NoArgsConstructor
     @Entity
-    @Table(name = "usuario",uniqueConstraints = {@UniqueConstraint(columnNames = {"cpf"})})
+    @Table(name = "usuario",uniqueConstraints = {@UniqueConstraint(columnNames = {"cpf","email"})})
     public class Usuario {
 
         @Id

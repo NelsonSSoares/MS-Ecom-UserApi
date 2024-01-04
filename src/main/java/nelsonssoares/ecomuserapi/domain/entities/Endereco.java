@@ -19,7 +19,6 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotEmpty(message = "")
     @Column(length = 45)
     private String apelido;
 
@@ -45,18 +44,18 @@ public class Endereco {
     @Column(length = 45)
     private String cidade;
 
-    @NotEmpty(message = "${}")
-    @Column(length = 45)
+    @NotEmpty(message = "Deve conter somente 2 caracteres ex: SP")
+    @Column(length = 2)
     private String estado;
 
     @NotNull(message = "${}")
     @Enumerated(EnumType.STRING)
     private Pais pais;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Usuario.class)
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuarioId;
-
+//    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Usuario.class)
+//    @JoinColumn(name = "usuario_id")
+//    private Usuario usuarioId;
+    private Integer usuarioId;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name ="endereco_padrao")
