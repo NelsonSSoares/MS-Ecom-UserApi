@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.dtos.EnderecoDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Endereco;
 import nelsonssoares.ecomuserapi.services.EnderecoService;
-import nelsonssoares.ecomuserapi.usecases.endereco.SaveEndereco;
-import org.springframework.data.domain.Page;
+import nelsonssoares.ecomuserapi.usecases.endereco.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -18,6 +17,10 @@ import java.util.List;
 public class EnderecoServiceImpl implements EnderecoService {
 
     private final SaveEndereco saveEndereco;
+    private final GetAllEndereco getAllEndereco;
+    private final GetEnderecoByUserId getEnderecoByUserId;
+    private final UpdateEndereco updateEndereco;
+    private final DeleteEndereco deleteEndereco;
 
     @Override
     public ResponseEntity<Endereco> salvar(EnderecoDTO endDto) {
@@ -27,12 +30,14 @@ public class EnderecoServiceImpl implements EnderecoService {
 
     @Override
     public ResponseEntity<Endereco> atualizar(Integer id, EnderecoDTO endDto) {
-        return null;
+        Endereco endereco = updateEndereco.execute(id, endDto);
+        return endereco != null ? ResponseEntity.ok(endereco) : ResponseEntity.notFound().build();
     }
 
     @Override
     public ResponseEntity<Endereco> deletar(Integer id) {
-        return null;
+        Endereco endereco = deleteEndereco.execute(id);
+        return endereco != null ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
     @Override
@@ -41,12 +46,15 @@ public class EnderecoServiceImpl implements EnderecoService {
     }
 
     @Override
-    public ResponseEntity<Page<Endereco>> obterTodos(Pageable paginacao) {
-        return null;
+    public ResponseEntity<List<Endereco>> obterTodos(Pageable paginacao) {
+        List<Endereco> enderecos =getAllEndereco.execute(paginacao);
+        return enderecos != null ? ResponseEntity.ok(enderecos) : ResponseEntity.notFound().build();
     }
 
     @Override
     public ResponseEntity<List<Endereco>> obterPorUsuarioId(Integer id) {
-        return null;
+        List<Endereco> enderecos = getEnderecoByUserId.execute(id);
+        return enderecos != null ? ResponseEntity.ok(enderecos) : ResponseEntity.notFound().build();
+
     }
 }
