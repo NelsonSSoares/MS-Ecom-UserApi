@@ -22,5 +22,7 @@ public class ControllersConstants {
     // ADDRESS ENDPOINTS
 
     public static final String ADDRESS = "/endereco";
+    public static final String ADDRESS_ID = "/endereco/{id}";
+    public static final String ADDRESS_USER_ID = "/usuario/{id}";
 
 }

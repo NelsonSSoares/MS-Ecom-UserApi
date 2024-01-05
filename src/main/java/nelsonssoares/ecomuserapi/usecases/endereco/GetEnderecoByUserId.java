@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GetAdressByUserId {
+public class GetEnderecoByUserId {
 
     private final EnderecoRepository enderecoRepository;
     private final UsuarioRepository usuarioRepository;

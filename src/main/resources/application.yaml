@@ -1,11 +1,11 @@
-#eureka:
-#  instance:
-#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-#  client:
-#    register-with-eureka: 'true'
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka
-#    fetch-registry: 'true'
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: 'true'
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: 'true'
 spring:
   jpa:
     properties:
@@ -23,4 +23,4 @@ server:
   error:
     include-stacktrace: never
     include-exception: 'false'
-#  port: ${PORT:0}
+  port: ${PORT:0}
