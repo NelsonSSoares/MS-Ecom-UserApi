@@ -53,7 +53,7 @@ public class TestUserController {
             TESTE FALHANDO, RETORNANDO 201 AO INVÉS DE 400 OU 422, Falha no teste de validação de dados
          */
 
-        UsuarioDTO usuario = new UsuarioDTO("","","","","");
+        UsuarioDTO usuario = new UsuarioDTO("", "", "", "", "");
         UsuarioDTO invalidoUsuario = new UsuarioDTO(null, null, null, null, null);
 
         mockMvc.perform(post(API_BASE_URL)
@@ -124,5 +124,46 @@ public class TestUserController {
                 .andExpect(content().string(""));
     }
 
+    @Test
+    public void getUser_ByExistingCpf_ShouldReturnUsuario() throws Exception {
 
+        when(userService.findByCpf("998.767.250-76")).thenReturn(VALID_USER_GETRESPONSE);
+        mockMvc.perform(get(API_BASE_URL + CPF, "998.767.250-76"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome").value(VALID_USER_GETRESPONSE.getBody().getNome()))
+                .andExpect(jsonPath("$.sobrenome").value(VALID_USER_GETRESPONSE.getBody().getSobrenome()))
+                .andExpect(jsonPath("$.cpf").value(VALID_USER_GETRESPONSE.getBody().getCpf()))
+                .andExpect(jsonPath("$.telefone").value(VALID_USER_GETRESPONSE.getBody().getTelefone()))
+                .andExpect(jsonPath("$.email").value(VALID_USER_GETRESPONSE.getBody().getEmail()));
+    }
+
+    @Test
+    public void getUser_ByNonExistingCpf_ShouldReturnNotFound() throws Exception {
+
+        when(userService.findByCpf("998.767.250-76")).thenReturn(INVALID_USER_GETRESPONSE);
+        mockMvc.perform(get(API_BASE_URL + CPF, "998.767.250-76"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void getUser_ByExistingEmail_ShouldReturnUsuario() throws Exception {
+        when(userService.findByEmail("123deoliveira4@gmail.com")).thenReturn(VALID_USERDTO_GETRESPONSE);
+
+        mockMvc.perform(get(API_BASE_URL + EMAIL, "123deoliveira4@gmail.com"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome").value(VALID_USER_GETRESPONSE.getBody().getNome()))
+                .andExpect(jsonPath("$.sobrenome").value(VALID_USER_GETRESPONSE.getBody().getSobrenome()))
+                .andExpect(jsonPath("$.cpf").value(VALID_USER_GETRESPONSE.getBody().getCpf()))
+                .andExpect(jsonPath("$.telefone").value(VALID_USER_GETRESPONSE.getBody().getTelefone()))
+                .andExpect(jsonPath("$.email").value(VALID_USER_GETRESPONSE.getBody().getEmail()));
+    }
+
+//    @Test
+//    public void getUser_ByNonExistingEmail_ShouldReturnNotFound() throws Exception {
+//        when(userService.findByEmail("123deoliveira4@gmail.com")).thenReturn(INVALID_USERDTO_GETRESPONSE);
+//        mockMvc.perform(get(API_BASE_URL + EMAIL, "123deoliveira4@gmail.com"))
+//                .andExpect(status().isNotFound());
+//
+//
+//    }
 }
