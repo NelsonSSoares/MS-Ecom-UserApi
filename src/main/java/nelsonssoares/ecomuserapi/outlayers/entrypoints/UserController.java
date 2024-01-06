@@ -39,7 +39,7 @@ public class UserController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Valid UsuarioDTO dto) {
+    public ResponseEntity<UsuarioDTO> save(@RequestBody @Valid UsuarioDTO dto) {
         //Retornar entidade Usuario com ID
         return userService.save(dto);
     }
@@ -57,7 +57,7 @@ public class UserController {
     })
     @PutMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable("id") Integer id, @RequestBody @Valid UsuarioDTO userDTO) {
+    public ResponseEntity<Usuario> updateUser(@PathVariable("id") Integer id, @RequestBody @Valid UsuarioDTO userDTO) {
         return userService.updateUser(id, userDTO);
     }
 
@@ -73,7 +73,7 @@ public class UserController {
     })
     @PutMapping(value = ACTIVE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Usuario> ativarUsuario(@PathVariable("id") Integer id) {
+    public ResponseEntity<Usuario> activeUser(@PathVariable("id") Integer id) {
         return userService.reactiveUser(id);
     }
 
@@ -88,7 +88,7 @@ public class UserController {
     })
     @DeleteMapping(value = ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Usuario> deletarUsuario(@PathVariable("id") Integer id) {
+    public ResponseEntity<Usuario> deleteUser(@PathVariable("id") Integer id) {
         //Retornando 409 apos deletar usuario
         return userService.deleteUser(id);
     }
@@ -103,7 +103,7 @@ public class UserController {
     })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<UsuarioDTO>> buscarTodos(Pageable paginacao) {
+    public ResponseEntity<List<UsuarioDTO>> findAll(Pageable paginacao) {
         return userService.findAll(paginacao);
     }
 
@@ -118,7 +118,7 @@ public class UserController {
     })
     @GetMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Usuario> buscarPorId(@PathVariable("id") Integer id) {
+    public ResponseEntity<Usuario> findById(@PathVariable("id") Integer id) {
         return userService.findById(id);
     }
 
@@ -131,7 +131,7 @@ public class UserController {
     })
     @GetMapping(value = NAME)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<UsuarioDTO>> buscarPorNome(@PathVariable("nome") String nome) {
+    public ResponseEntity<List<UsuarioDTO>> findByName(@PathVariable("nome") String nome) {
         return userService.findByName(nome);
     }
 
@@ -145,8 +145,7 @@ public class UserController {
     })
     @GetMapping(value = CPF)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Usuario> buscarPorCpf(@PathVariable("cpf") String cpf) {
-        //Retornar 409 quando usuario ja estiver ativo
+    public ResponseEntity<Usuario> findByCPF(@PathVariable("cpf") String cpf) {
         return userService.findByCpf(cpf);
     }
 
@@ -160,7 +159,7 @@ public class UserController {
     })
     @GetMapping(value = EMAIL)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UsuarioDTO> buscarPorEmail(@PathVariable("email") String email) {
+    public ResponseEntity<UsuarioDTO> findByEmail(@PathVariable("email") String email) {
         return userService.findByEmail(email);
     }
 

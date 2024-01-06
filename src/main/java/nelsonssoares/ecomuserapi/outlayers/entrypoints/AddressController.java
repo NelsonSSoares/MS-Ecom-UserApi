@@ -122,7 +122,7 @@ public class AddressController {
     })
     @GetMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<EnderecoDTO> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Endereco> findById(@PathVariable("id") Integer id) {
         return addressService.findById(id);
     }
 

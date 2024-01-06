@@ -31,8 +31,7 @@ public class UpdateUser {
         user.setEmail(userDTO.email());
         user.setTelefone(userDTO.telefone());
 
-        Usuario usuarioAtualizado = usuarioRepository.save(user);
-        return usuarioAtualizado;
+        return usuarioRepository.save(user);
     }
 
 }
