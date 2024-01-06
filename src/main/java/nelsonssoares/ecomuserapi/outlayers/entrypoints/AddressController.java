@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.dtos.EnderecoDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Endereco;
-import nelsonssoares.ecomuserapi.services.EnderecoService;
+import nelsonssoares.ecomuserapi.services.AddressService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +22,9 @@ import static nelsonssoares.ecomuserapi.constants.ControllersConstants.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = API_BASE_URL+ADDRESS, produces = API_PRODUCES)
-public class EnderecoController {
+public class AddressController {
 
-    private final EnderecoService enderecoService;
+    private final AddressService addressService;
 
 
     @Operation(summary = "Metodo para cadastrar novo endereço", method = "POST")
@@ -39,7 +39,7 @@ public class EnderecoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Endereco> save(@RequestBody @Valid EnderecoDTO enderecoDTO) {
-        return enderecoService.salvar(enderecoDTO);
+        return addressService.save(enderecoDTO);
     }
 
 
@@ -54,8 +54,8 @@ public class EnderecoController {
     })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Endereco>> obterTodos(Pageable paginacao) {
-        return enderecoService.obterTodos(paginacao);
+    public ResponseEntity<List<Endereco>> findAllAddresses(Pageable paginacao) {
+        return addressService.findAll(paginacao);
     }
 
 
@@ -71,8 +71,8 @@ public class EnderecoController {
     })
     @GetMapping(value = ADDRESS_USER_ID)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Endereco>> obterPorUsuarioId(@PathVariable("id") Integer id) {
-        return enderecoService.obterPorUsuarioId(id);
+    public ResponseEntity<List<Endereco>> findAddressByUserId(@PathVariable("id") Integer id) {
+        return addressService.findByUserId(id);
     }
 
 
@@ -87,8 +87,8 @@ public class EnderecoController {
     })
     @PutMapping(value = ID)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Endereco> atualizar(@PathVariable("id") Integer id, @RequestBody @Valid EnderecoDTO enderecoDTO) {
-        return enderecoService.atualizar(id, enderecoDTO);
+    public ResponseEntity<Endereco> updateAddress(@PathVariable("id") Integer id, @RequestBody @Valid EnderecoDTO enderecoDTO) {
+        return addressService.update(id, enderecoDTO);
     }
 
 
@@ -104,8 +104,8 @@ public class EnderecoController {
     })
     @DeleteMapping(value = ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Endereco> deletar(@PathVariable("id") Integer id) {
-        return enderecoService.deletar(id);
+    public ResponseEntity<Endereco> delete(@PathVariable("id") Integer id) {
+        return addressService.delete(id);
     }
 
 
@@ -122,8 +122,8 @@ public class EnderecoController {
     })
     @GetMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<EnderecoDTO> buscarPorId(@PathVariable("id") Integer id) {
-        return enderecoService.buscarPorId(id);
+    public ResponseEntity<Endereco> findById(@PathVariable("id") Integer id) {
+        return addressService.findById(id);
     }
 
 }

@@ -17,14 +17,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UpdateEndereco {
+public class UpdateAddress {
 
     private final UsuarioRepository usuarioRepository;
     private final EnderecoRepository enderecoRepository;
     private final ObjectMapper objectMapper;
 
     @Transactional
-    public Endereco execute(Integer id, EnderecoDTO endDto) {
+    public Endereco executeUpdateAddress(Integer id, EnderecoDTO endDto) {
         Optional<Endereco> endereco = enderecoRepository.findById(id);
 
         if(endereco.isEmpty() ){

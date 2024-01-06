@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GetUsuarioByEmail {
+public class GetUserByEmail {
 
     private final UsuarioRepository usuarioRepository;
     private final ObjectMapper objectMapper;
 
-    public UsuarioDTO execute(String email) {
+    public UsuarioDTO executeUserByEmail(String email) {
         System.out.println(email);
         Optional<Usuario> user = usuarioRepository.findByEmail(email);
         System.out.println(user);

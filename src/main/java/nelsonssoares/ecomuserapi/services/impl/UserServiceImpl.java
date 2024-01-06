@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
 import nelsonssoares.ecomuserapi.domain.entities.enums.PerguntaAtivo;
-import nelsonssoares.ecomuserapi.services.UsuarioService;
+import nelsonssoares.ecomuserapi.services.UserService;
 import nelsonssoares.ecomuserapi.usecases.usuario.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,30 +15,30 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioServiceImpl implements UsuarioService {
+public class UserServiceImpl implements UserService {
 
-    private final SaveUsuario saveUsuario;
-    private final GetAllUsuarios getAllUsuarios;
-    private final GetUsuarioById getUsuarioById;
-    private final UpdateUsuario updateUsuario;
-    private final DeleteUsuario deleteUsuario;
-    private final GetUsuarioByName getUsuarioByName;
-    private final GetUsuarioByCpf getUsuarioByCpf;
-    private final GetUsuarioByEmail getUsuarioByEmail;
-    private final ActiveUsuario activeUsuario;
+    private final SaveUser saveUser;
+    private final GetAllUsers getAllUsers;
+    private final GetUserById getUserById;
+    private final UpdateUser updateUser;
+    private final DeleteUser deleteUser;
+    private final GetUserByName getUserByName;
+    private final GetUserByCpf getUserByCpf;
+    private final GetUserByEmail getUserByEmail;
+    private final ActiveUser activeUser;
 
     @Override
-    public ResponseEntity<UsuarioDTO> salvar(UsuarioDTO dto) {
+    public ResponseEntity<UsuarioDTO> save(UsuarioDTO dto) {
 
-        UsuarioDTO usuario = saveUsuario.execute(dto);
+        UsuarioDTO usuario = saveUser.executeSaveUser(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @Override
-    public ResponseEntity<List<UsuarioDTO>> buscarTodos(Pageable paginacao) {
+    public ResponseEntity<List<UsuarioDTO>> findAll(Pageable paginacao) {
 
-        List<UsuarioDTO> usuarios = getAllUsuarios.execute(paginacao);
+        List<UsuarioDTO> usuarios = getAllUsers.executeAllUsers(paginacao);
 
         if(usuarios.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -47,9 +47,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<Usuario> buscarPorId(Integer id) {
+    public ResponseEntity<Usuario> findById(Integer id) {
 
-        Usuario usuario = getUsuarioById.execute(id);
+        Usuario usuario = getUserById.executeUserById(id);
 
         if(usuario == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -61,9 +61,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<Usuario> atualizarUsuario(Integer id, UsuarioDTO userDTO) {
+    public ResponseEntity<Usuario> updateUser(Integer id, UsuarioDTO userDTO) {
 
-        Usuario usuario = updateUsuario.execute(id, userDTO);
+        Usuario usuario = updateUser.executeUpdateUser(id, userDTO);
 
         if(usuario == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -75,8 +75,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<Usuario> deletarUsuario(Integer id) {
-        Usuario usuario = deleteUsuario.execute(id);
+    public ResponseEntity<Usuario> deleteUser(Integer id) {
+        Usuario usuario = deleteUser.executeDeleteUser(id);
 
         if(usuario == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -88,25 +88,25 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<List<UsuarioDTO>> encontrarPorNome(String nome) {
+    public ResponseEntity<List<UsuarioDTO>> findByName(String nome) {
 
-        List<UsuarioDTO> usuarios = getUsuarioByName.execute(nome);
+        List<UsuarioDTO> usuarios = getUserByName.executeUserByName(nome);
 
         return usuarios.isEmpty() ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.ok(usuarios);
     }
 
     @Override
-    public ResponseEntity<Usuario> encontrarPorCpf(String cpf) {
+    public ResponseEntity<Usuario> findByCpf(String cpf) {
 
-        Usuario usuario = getUsuarioByCpf.execute(cpf);
+        Usuario usuario = getUserByCpf.executeUserByCpf(cpf);
 
         return usuario == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() : ResponseEntity.ok(usuario);
     }
 
     @Override
-    public ResponseEntity<Usuario> reativarUsuario(Integer id) {
+    public ResponseEntity<Usuario> reactiveUser(Integer id) {
 
-        Usuario usuario = activeUsuario.execute(id);
+        Usuario usuario = activeUser.executeActiveUser(id);
 
         return usuario == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() : ResponseEntity.ok(usuario);
     }
@@ -114,7 +114,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResponseEntity<UsuarioDTO> findByEmail(String email) {
 
-        UsuarioDTO usuario = getUsuarioByEmail.execute(email);
+        UsuarioDTO usuario = getUserByEmail.executeUserByEmail(email);
 
         return usuario == null ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() : ResponseEntity.ok(usuario);
     }
