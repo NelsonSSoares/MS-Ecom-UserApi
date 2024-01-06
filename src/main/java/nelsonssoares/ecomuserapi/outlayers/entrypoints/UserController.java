@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
-import nelsonssoares.ecomuserapi.services.UsuarioService;
+import nelsonssoares.ecomuserapi.services.UserService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +23,9 @@ import static nelsonssoares.ecomuserapi.constants.ControllersConstants.*;
 @RestController
 @RequestMapping(value = API_BASE_URL, produces = API_PRODUCES)
 //@SecurityRequirement(name = API_SECURITY_REQUIREMENT)
-public class UsuarioController {
+public class UserController {
 
-    private final UsuarioService usuarioService;
+    private final UserService userService;
 
 
     @Operation(summary = "Metodo para cadastrar novo usuário", method = "POST")
@@ -41,7 +41,7 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Valid UsuarioDTO dto) {
         //Retornar entidade Usuario com ID
-        return usuarioService.salvar(dto);
+        return userService.save(dto);
     }
 
 
@@ -58,7 +58,7 @@ public class UsuarioController {
     @PutMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Usuario> atualizarUsuario(@PathVariable("id") Integer id, @RequestBody @Valid UsuarioDTO userDTO) {
-        return usuarioService.atualizarUsuario(id, userDTO);
+        return userService.updateUser(id, userDTO);
     }
 
 
@@ -74,7 +74,7 @@ public class UsuarioController {
     @PutMapping(value = ACTIVE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Usuario> ativarUsuario(@PathVariable("id") Integer id) {
-        return usuarioService.reativarUsuario(id);
+        return userService.reactiveUser(id);
     }
 
 
@@ -90,7 +90,7 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Usuario> deletarUsuario(@PathVariable("id") Integer id) {
         //Retornando 409 apos deletar usuario
-        return usuarioService.deletarUsuario(id);
+        return userService.deleteUser(id);
     }
 
 
@@ -104,7 +104,7 @@ public class UsuarioController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<UsuarioDTO>> buscarTodos(Pageable paginacao) {
-        return usuarioService.buscarTodos(paginacao);
+        return userService.findAll(paginacao);
     }
 
 
@@ -119,7 +119,7 @@ public class UsuarioController {
     @GetMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Usuario> buscarPorId(@PathVariable("id") Integer id) {
-        return usuarioService.buscarPorId(id);
+        return userService.findById(id);
     }
 
     @Operation(summary = "Busca usuarios cadastrados por Nome", method = "GET")
@@ -132,7 +132,7 @@ public class UsuarioController {
     @GetMapping(value = NAME)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<UsuarioDTO>> buscarPorNome(@PathVariable("nome") String nome) {
-        return usuarioService.encontrarPorNome(nome);
+        return userService.findByName(nome);
     }
 
 
@@ -147,7 +147,7 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Usuario> buscarPorCpf(@PathVariable("cpf") String cpf) {
         //Retornar 409 quando usuario ja estiver ativo
-        return usuarioService.encontrarPorCpf(cpf);
+        return userService.findByCpf(cpf);
     }
 
 
@@ -161,7 +161,7 @@ public class UsuarioController {
     @GetMapping(value = EMAIL)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UsuarioDTO> buscarPorEmail(@PathVariable("email") String email) {
-        return usuarioService.findByEmail(email);
+        return userService.findByEmail(email);
     }
 
 }

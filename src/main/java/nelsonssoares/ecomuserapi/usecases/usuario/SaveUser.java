@@ -16,13 +16,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SaveUsuario {
+public class SaveUser {
 
     private final UsuarioRepository usuarioRepository;
     private final ObjectMapper objectMapper;
 
     @Transactional
-    public UsuarioDTO execute(UsuarioDTO user) {
+    public UsuarioDTO executeSaveUser(UsuarioDTO user) {
 
         List<Usuario> usuarios = usuarioRepository.findAll();
 

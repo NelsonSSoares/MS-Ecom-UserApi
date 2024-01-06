@@ -1,34 +1,36 @@
 package nelsonssoares.ecomuserapi.usecases.endereco;
 
+
 import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.entities.Endereco;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
-import nelsonssoares.ecomuserapi.domain.entities.enums.PerguntaAtivo;
 import nelsonssoares.ecomuserapi.domain.repository.EnderecoRepository;
 import nelsonssoares.ecomuserapi.domain.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GetEnderecoById {
+public class GetAddressByUserId {
+
     private final EnderecoRepository enderecoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public Endereco execute(Integer id) {
-        Optional<Endereco> endereco = enderecoRepository.findById(id);
-        if (endereco.isEmpty()) {
-            return null;
-        }
-        Optional<Usuario> usuario = usuarioRepository.findById(endereco.get().getUsuarioId());
-        if(usuario.get().getAtivo().equals(PerguntaAtivo.NAO)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço não encontrado!");
-        }
-        return endereco.get();
+    public List<Endereco> executeAddressByUserId(Integer id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
 
+        if (usuario.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
+        }
+        List<Endereco> enderecos = enderecoRepository.findAllByUsuarioId(id);
+        if (enderecos.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço não encontrado");
+        }
+
+        return enderecos;
     }
-
 }

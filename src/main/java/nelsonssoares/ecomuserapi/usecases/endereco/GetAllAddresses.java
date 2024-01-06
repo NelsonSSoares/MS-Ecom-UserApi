@@ -1,7 +1,6 @@
 package nelsonssoares.ecomuserapi.usecases.endereco;
 
 import lombok.RequiredArgsConstructor;
-import nelsonssoares.ecomuserapi.constraints.Constraints;
 import nelsonssoares.ecomuserapi.domain.entities.Endereco;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
 import nelsonssoares.ecomuserapi.domain.entities.enums.PerguntaAtivo;
@@ -15,12 +14,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GetAllEndereco {
+public class GetAllAddresses {
 
     private final EnderecoRepository enderecoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public List<Endereco> execute(Pageable paginacao) {
+    public List<Endereco> executeAllAddresses(Pageable paginacao) {
 
         List<Usuario> usuarios = usuarioRepository.findAll();
 

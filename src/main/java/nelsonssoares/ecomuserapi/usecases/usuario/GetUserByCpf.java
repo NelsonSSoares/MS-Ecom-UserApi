@@ -10,11 +10,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GetUsuarioByCpf {
+public class GetUserByCpf {
 
 private final UsuarioRepository usuarioRepository;
 
-    public Usuario execute(String cpf) {
+    public Usuario executeUserByCpf(String cpf) {
 
         Optional<Usuario> user = usuarioRepository.findByCpf(cpf);
 

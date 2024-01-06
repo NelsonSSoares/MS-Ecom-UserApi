@@ -15,11 +15,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ActiveUsuario {
+public class ActiveUser {
     private final UsuarioRepository usuarioRepository;
 
     @Transactional
-    public Usuario execute(Integer id) {
+    public Usuario executeActiveUser(Integer id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if(usuario.isEmpty()){
             return null;

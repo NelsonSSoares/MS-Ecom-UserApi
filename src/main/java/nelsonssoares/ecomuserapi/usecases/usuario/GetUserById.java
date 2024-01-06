@@ -9,11 +9,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GetUsuarioById {
+public class GetUserById {
 
     private final UsuarioRepository usuarioRepository;
 
-    public Usuario execute(Integer id) {
+    public Usuario executeUserById(Integer id) {
 
         Optional<Usuario> usuario = usuarioRepository.findById(id);
 

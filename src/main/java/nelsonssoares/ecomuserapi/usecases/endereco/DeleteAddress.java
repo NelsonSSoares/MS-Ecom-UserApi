@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteEndereco {
+public class DeleteAddress {
     private final UsuarioRepository usuarioRepository;
     private final EnderecoRepository enderecoRepository;
 
     @Transactional
-    public Endereco execute(Integer id) {
+    public Endereco executeDeteleAddress(Integer id) {
         Optional<Endereco> endereco = enderecoRepository.findById(id);
         if (endereco.isEmpty()) {
             return null;

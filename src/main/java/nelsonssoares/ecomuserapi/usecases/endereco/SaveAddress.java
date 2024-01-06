@@ -15,14 +15,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class SaveEndereco {
+public class SaveAddress {
 
     private final EnderecoRepository enderecoRepository;
     private final ObjectMapper objectMapper;
     private final UsuarioRepository usuarioRepository;
 
     @Transactional
-    public Endereco execute(EnderecoDTO enderecoDTO) {
+    public Endereco executeSaveAddress(EnderecoDTO enderecoDTO) {
 
         Endereco endereco = objectMapper.convertValue(enderecoDTO, Endereco.class);
         Optional<Usuario> usuarioId = usuarioRepository.findById(enderecoDTO.usuarioId());
