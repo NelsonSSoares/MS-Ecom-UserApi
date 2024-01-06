@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
 
 import static nelsonssoares.ecomuserapi.commons.ControllerConstants.*;
 import static nelsonssoares.ecomuserapi.commons.UsuarioConstants.*;
@@ -108,14 +105,23 @@ public class TestUserController {
     @Test
     public void getUser_ByExistingName_ShouldReturnUsuario() throws Exception {
 
-        when(userService.findByName("Nelson")).thenReturn((ResponseEntity<List<UsuarioDTO>>) List.of(VALID_USERDTO_GETRESPONSE));
+        when(userService.findByName("Nelson")).thenReturn(VALID_USERDTO_GETLISTRESPONSE);
         mockMvc.perform(get(API_BASE_URL + NAME, "Nelson"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome").value(VALID_USER_GETRESPONSE.getBody().getNome()))
-                .andExpect(jsonPath("$.sobrenome").value(VALID_USER_GETRESPONSE.getBody().getSobrenome()))
-                .andExpect(jsonPath("$.cpf").value(VALID_USER_GETRESPONSE.getBody().getCpf()))
-                .andExpect(jsonPath("$.telefone").value(VALID_USER_GETRESPONSE.getBody().getTelefone()))
-                .andExpect(jsonPath("$.email").value(VALID_USER_GETRESPONSE.getBody().getEmail()));
+                .andExpect(jsonPath("$[0].nome").value(VALID_USER_GETRESPONSE.getBody().getNome()))
+                .andExpect(jsonPath("$[0].sobrenome").value(VALID_USER_GETRESPONSE.getBody().getSobrenome()))
+                .andExpect(jsonPath("$[0].cpf").value(VALID_USER_GETRESPONSE.getBody().getCpf()))
+                .andExpect(jsonPath("$[0].telefone").value(VALID_USER_GETRESPONSE.getBody().getTelefone()))
+                .andExpect(jsonPath("$[0].email").value(VALID_USER_GETRESPONSE.getBody().getEmail()));
+    }
+
+    @Test
+    public void getUser_ByNonExistingName_ShouldReturnNotFound() throws Exception {
+        when(userService.findByName("Juarez")).thenReturn(EMPTY_LIST);
+
+        mockMvc.perform(get(API_BASE_URL + NAME, "Juarez"))
+                .andExpect(status().isNoContent())
+                .andExpect(content().string(""));
     }
 
 

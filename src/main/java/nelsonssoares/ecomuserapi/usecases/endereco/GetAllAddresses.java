@@ -21,23 +21,7 @@ public class GetAllAddresses {
 
     public List<Endereco> executeAllAddresses(Pageable paginacao) {
 
-        List<Usuario> usuarios = usuarioRepository.findAll();
+        return enderecoRepository.findActiveAddresses(paginacao);
 
-        List<Endereco> enderecos = enderecoRepository.findAll(paginacao).getContent();
-
-        List<Endereco> enderecosAtivos = new ArrayList<>();
-
-
-        for(Usuario usuario : usuarios){
-            if(usuario.getAtivo().equals(PerguntaAtivo.SIM)){
-                for(Endereco endereco : enderecos){
-                    if(endereco.getUsuarioId().equals(usuario.getId())){
-                        enderecosAtivos.add(endereco);
-                    }
-                }
-            }
-        }
-
-        return enderecosAtivos;
     }
 }
