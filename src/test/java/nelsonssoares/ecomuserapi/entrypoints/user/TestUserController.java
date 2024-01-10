@@ -1,4 +1,4 @@
-package nelsonssoares.ecomuserapi.entrypoints;
+package nelsonssoares.ecomuserapi.entrypoints.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
