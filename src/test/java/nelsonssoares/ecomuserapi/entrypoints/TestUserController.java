@@ -14,8 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static nelsonssoares.ecomuserapi.commons.ControllerConstants.*;
 import static nelsonssoares.ecomuserapi.commons.UsuarioConstants.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
@@ -158,12 +157,49 @@ public class TestUserController {
                 .andExpect(jsonPath("$.email").value(VALID_USER_GETRESPONSE.getBody().getEmail()));
     }
 
-//    @Test
-//    public void getUser_ByNonExistingEmail_ShouldReturnNotFound() throws Exception {
-//        when(userService.findByEmail("123deoliveira4@gmail.com")).thenReturn(INVALID_USERDTO_GETRESPONSE);
-//        mockMvc.perform(get(API_BASE_URL + EMAIL, "123deoliveira4@gmail.com"))
-//                .andExpect(status().isNotFound());
-//
-//
-//    }
+    @Test
+    public void getUser_ByNonExistingEmail_ShouldReturnNotFound() throws Exception {
+        when(userService.findByEmail("oliveira4@gmail.com")).thenReturn(INVALID_USERDTO_GETRESPONSE);
+        mockMvc.perform(get(API_BASE_URL + EMAIL, "oliveira4@gmail.com"))
+                .andExpect(status().isNotFound());
+
+
+    }
+
+    @Test
+    public void removeUser_ByExistingId_ShouldReturnNoContent() throws Exception {
+        when(userService.deleteUser(1)).thenReturn(VALID_USER_GETRESPONSE);
+        mockMvc.perform(delete(API_BASE_URL + ID, 1))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void removeUser_ByNonExistingId_ShouldReturnNotFound() throws Exception {
+        when(userService.deleteUser(50)).thenReturn(INVALID_USER_GETRESPONSE);
+        mockMvc.perform(delete(API_BASE_URL + ID, 50))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updateUser_ByExistingId_ShouldReturnUsuario() throws Exception {
+        when(userService.updateUser(1, VALID_USERDTO)).thenReturn(VALID_USER_GETRESPONSE);
+        mockMvc.perform(put(API_BASE_URL + ID, 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(VALID_USERDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome").value(VALID_USERDTO_RESPONSE.getBody().nome()))
+                .andExpect(jsonPath("$.sobrenome").value(VALID_USERDTO_RESPONSE.getBody().sobrenome()))
+                .andExpect(jsonPath("$.cpf").value(VALID_USERDTO_RESPONSE.getBody().cpf()))
+                .andExpect(jsonPath("$.telefone").value(VALID_USERDTO_RESPONSE.getBody().telefone()))
+                .andExpect(jsonPath("$.email").value(VALID_USERDTO_RESPONSE.getBody().email()));
+    }
+
+    @Test
+    public void updateUser_ByNonExistingId_ShouldReturnNotFound() throws Exception {
+        when(userService.updateUser(50, VALID_USERDTO)).thenReturn(INVALID_USER_GETRESPONSE);
+        mockMvc.perform(put(API_BASE_URL + ID, 50)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(VALID_USERDTO)))
+                .andExpect(status().isNotFound());
+    }
 }

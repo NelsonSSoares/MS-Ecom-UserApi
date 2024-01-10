@@ -22,7 +22,7 @@ public class UsuarioConstants {
     public static final ResponseEntity<Usuario> VALID_USER_GETRESPONSE = ResponseEntity.status(HttpStatus.OK).body(VALID_USER);
     public static final ResponseEntity<UsuarioDTO> VALID_USERDTO_GETRESPONSE = ResponseEntity.status(HttpStatus.OK).body(VALID_USERDTO);
 
-    public static final ResponseEntity<UsuarioDTO> INVALID_USERDTO_GETRESPONSE = ResponseEntity.status(HttpStatus.OK).body(INVALID_USERDTO);
+    public static final ResponseEntity<UsuarioDTO> INVALID_USERDTO_GETRESPONSE = ResponseEntity.status(HttpStatus.NOT_FOUND).body(INVALID_USERDTO);
     public static final ResponseEntity<Usuario> INVALID_USER_GETRESPONSE = ResponseEntity.status(HttpStatus.NOT_FOUND).body(INVALID_USER);
 
 }
