@@ -15,7 +15,10 @@ public class UsuarioConstants {
     public static final UsuarioDTO INVALID_USERDTO = new UsuarioDTO(null,"Sousa","998.557.250-76","11949793152","");
     public static final Usuario VALID_USER = new Usuario(1,"Nelson","Sousa","998.767.250-76","11949793152", LocalDate.now(),LocalDate.now(),"123deoliveira4@gmail.com", PerguntaAtivo.SIM);
     public static final Usuario DESACTIVATED_USER = new Usuario(1,"Nelson","Sousa","998.767.250-76","11949793152", LocalDate.now(),LocalDate.now(),"123deoliveira4@gmail.com", PerguntaAtivo.NAO);
-    public static final Usuario INVALID_USER = new Usuario(1,"Nelson","Sousa","998.767.250-76","", LocalDate.now(),LocalDate.now(),"123deoliveira4", PerguntaAtivo.SIM);
+    public static final Usuario INVALID_USER = new Usuario(null,"Nelson","Sousa","998.767.250-76","", LocalDate.now(),LocalDate.now(),"123deoliveira4", PerguntaAtivo.SIM);
+
+    public static final UsuarioDTO NONEXISTENT_USERDTO = new UsuarioDTO("Mohamed","Sousa","998.666.250-76","11949793152","123@gmail.com");
+
     public static final ResponseEntity<UsuarioDTO> VALID_USERDTO_RESPONSE = ResponseEntity.status(HttpStatus.CREATED).body(VALID_USERDTO);
     public static final ResponseEntity<List<UsuarioDTO>> VALID_USERDTO_GETLISTRESPONSE = ResponseEntity.status(HttpStatus.OK).body(Collections.singletonList(VALID_USERDTO));
     public static final ResponseEntity<List<UsuarioDTO>> EMPTY_LIST = ResponseEntity.noContent().build();
