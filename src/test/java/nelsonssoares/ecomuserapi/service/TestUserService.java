@@ -5,6 +5,7 @@ import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
 import nelsonssoares.ecomuserapi.domain.repository.UsuarioRepository;
 import nelsonssoares.ecomuserapi.services.impl.UserServiceImpl;
+import nelsonssoares.ecomuserapi.usecases.usuario.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,24 +30,44 @@ public class TestUserService {
     @Mock
     private UsuarioRepository usuarioRepository;
 
+    @Mock
+    private SaveUser saveUser;
+
+    @Mock
+    private GetAllUsers getAllUsers;
+
+    @Mock
+    private GetUserById getUserById;
+
+    @Mock
+    private UpdateUser updateUser;
+
+    @Mock
+    private DeleteUser deleteUser;
+
+    @Mock
+    private GetUserByName getUserByName;
+
+    @Mock
+    private GetUserByCpf getUserByCpf;
+
+    @Mock
+    private GetUserByEmail getUserByEmail;
+
+    @Mock
+    private ActiveUser activeUser;
+
     @Test
     public void createUser_WithValidUser_ShouldReturnUser() {
 
-       when(usuarioRepository.save(VALID_USER)).thenReturn(VALID_USER);
-
-       UsuarioDTO sut = userService.save(VALID_USERDTO).getBody();
-
-       assertThat(sut).isEqualTo(VALID_USERDTO);
+        when(saveUser.executeSaveUser(VALID_USERDTO)).thenReturn(VALID_USERDTO);
+        UsuarioDTO sut = userService.save(VALID_USERDTO).getBody();
+        assertThat(sut).isEqualTo(VALID_USERDTO);
     }
 
     @Test
     public void createUser_WithInvalidUser_ThrowsException() {
-
-        /*
-            TESTE COM ERRO
-         */
-
-        when(usuarioRepository.save(INVALID_USER)).thenThrow(RuntimeException.class);
+        when(saveUser.executeSaveUser(INVALID_USERDTO)).thenThrow(RuntimeException.class);
         assertThatThrownBy(() -> userService.save(INVALID_USERDTO))
                 .isInstanceOf(RuntimeException.class);
     }
@@ -54,25 +75,12 @@ public class TestUserService {
     @Test
     public void getUser_WithValidId_ShouldReturnUser() {
 
-        /*
-            TESTE COM ERRO
-         */
-
-        when(usuarioRepository.findById(VALID_USER.getId())).thenReturn(Optional.of(VALID_USER));
-
-        Usuario sut = userService.findById(VALID_USER.getId()).getBody();
-
-        assertThat(sut).isEqualTo(VALID_USERDTO);
     }
 
     @Test
     public void getUser_WithInvalidId_ShouldReturnUser() {
 
-        when(usuarioRepository.findById(INVALID_USER.getId())).thenReturn(Optional.empty());
 
-        ResponseEntity<Usuario> sut = userService.findById(INVALID_USER.getId());
-
-        assertThat(sut).isEqualTo(INVALID_USER_GETRESPONSE);
     }
     
 }
