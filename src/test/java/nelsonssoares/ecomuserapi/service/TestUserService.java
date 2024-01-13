@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -77,13 +78,11 @@ public class TestUserService {
     }
 
     @Test
-    public void getUser_WithInvalidId_ShouldReturnUser() {
+    public void getUser_WithInvalidId_ShouldReturnNotFound() {
 
-        /*Retornando 200 ao invés de 404*/
-
-        when(getUserById.executeUserById(INVALID_USER.getId())).thenReturn(INVALID_USER_GETRESPONSE.getBody());
-        ResponseEntity<Usuario> sut = userService.findById(INVALID_USER.getId());
-        assertThat(sut).isEqualTo(INVALID_USER_GETRESPONSE);
+        when(getUserById.executeUserById(DESACTIVATED_USER.getId())).thenReturn(INVALID_USER_GETRESPONSE.getBody());
+        ResponseEntity<Usuario> sut = userService.findById(DESACTIVATED_USER.getId());
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test
@@ -94,13 +93,11 @@ public class TestUserService {
     }
 
     @Test
-    public void getUser_WithInvalidName_ShouldReturnUser() {
-
-        /*TESTE COM ERRO*/
+    public void getUser_WithInvalidName_ShouldReturnNotFound() {
 
         when(getUserByName.executeUserByName(NONEXISTENT_USERDTO.nome())).thenReturn(EMPTY_LIST.getBody());
-        ResponseEntity<List<UsuarioDTO>> sut = userService.findByName(NONEXISTENT_USERDTO.nome());
-        assertThat(sut).isEqualTo(EMPTY_LIST);
+        assertThatThrownBy(() -> userService.findByName(NONEXISTENT_USERDTO.nome()))
+                .isInstanceOf(RuntimeException.class);
     }
 
     @Test
@@ -111,7 +108,7 @@ public class TestUserService {
     }
 
     @Test
-    public void getUser_WithInvalidCpf_ShouldReturnUser() {
+    public void getUser_WithInvalidCpf_ShouldReturnNotFound() {
 
         /*TESTE COM ERRO retornando 200 ao inves de 404*/
 
@@ -128,7 +125,7 @@ public class TestUserService {
     }
 
     @Test
-    public void getUser_WithInvalidEmail_ShouldReturnUser() {
+    public void getUser_WithInvalidEmail_ShouldReturnNotFound() {
 
         /*TESTE COM ERRO*/
 
@@ -145,7 +142,7 @@ public class TestUserService {
     }
 
     @Test
-    public void updateUser_WithInvalidUser_ShouldReturnUser() {
+    public void updateUser_WithInvalidUser_ShouldReturnNotFound() {
 
         /*TESTE COM ERRO*/
 
@@ -162,7 +159,7 @@ public class TestUserService {
     }
 
     @Test
-public void deleteUser_WithInvalidUser_ShouldReturnUser() {
+public void deleteUser_WithInvalidUser_ShouldReturnNotFound() {
 
         /*TESTE COM ERRO*/
 
@@ -179,7 +176,7 @@ public void deleteUser_WithInvalidUser_ShouldReturnUser() {
     }
 
     @Test
-    public void reactiveUser_WithInvalidUser_ShouldReturnUser() {
+    public void reactiveUser_WithInvalidUser_ShouldReturnNotFound() {
 
         /*TESTE COM ERRO*/
 
