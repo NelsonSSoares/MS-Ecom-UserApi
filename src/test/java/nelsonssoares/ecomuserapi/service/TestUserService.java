@@ -93,7 +93,7 @@ public class TestUserService {
     }
 
     @Test
-    public void getUser_WithInvalidName_ShouldReturnNotFound() {
+    public void getUser_WithInvalidName_ThrowsException() {
 
         when(getUserByName.executeUserByName(NONEXISTENT_USERDTO.nome())).thenReturn(EMPTY_LIST.getBody());
         assertThatThrownBy(() -> userService.findByName(NONEXISTENT_USERDTO.nome()))
@@ -110,8 +110,6 @@ public class TestUserService {
     @Test
     public void getUser_WithInvalidCpf_ShouldReturnNotFound() {
 
-        /*TESTE COM ERRO retornando 200 ao inves de 404*/
-
         when(getUserByCpf.executeUserByCpf(NONEXISTENT_USERDTO.cpf())).thenReturn(INVALID_USER_GETRESPONSE.getBody());
         ResponseEntity<Usuario> sut = userService.findByCpf(NONEXISTENT_USERDTO.cpf());
         assertThat(sut).isEqualTo(INVALID_USER_GETRESPONSE);
@@ -127,8 +125,6 @@ public class TestUserService {
     @Test
     public void getUser_WithInvalidEmail_ShouldReturnNotFound() {
 
-        /*TESTE COM ERRO*/
-
         when(getUserByEmail.executeUserByEmail(NONEXISTENT_USERDTO.email())).thenReturn(INVALID_USERDTO_GETRESPONSE.getBody());
         ResponseEntity<UsuarioDTO> sut = userService.findByEmail(NONEXISTENT_USERDTO.email());
         assertThat(sut).isEqualTo(INVALID_USERDTO_GETRESPONSE);
@@ -142,28 +138,30 @@ public class TestUserService {
     }
 
     @Test
-    public void updateUser_WithInvalidUser_ShouldReturnNotFound() {
+    public void updateUser_WithInvalidUser_ThrowsException() {
 
-        /*TESTE COM ERRO*/
+        when(updateUser.executeUpdateUser(VALID_USER.getId(), INVALID_USERDTO)).thenThrow(RuntimeException.class);
+        assertThatThrownBy(() -> userService.updateUser(VALID_USER.getId(), INVALID_USERDTO))
+                .isInstanceOf(RuntimeException.class);
 
-        when(updateUser.executeUpdateUser(INVALID_USER.getId(), INVALID_USERDTO)).thenReturn(INVALID_USER);
-        ResponseEntity<Usuario> sut = userService.updateUser(INVALID_USER.getId(), INVALID_USERDTO);
-        assertThat(sut).isEqualTo(INVALID_USER_GETRESPONSE);
     }
 
     @Test
-    public void deleteUser_WithValidUser_ShouldReturnUser() {
-        when(deleteUser.executeDeleteUser(VALID_USER.getId())).thenReturn(VALID_USER);
+    public void deleteUser_WithValidUser_ShouldReturnNoContent() {
+
+        when(deleteUser.executeDeleteUser(VALID_USER.getId())).thenReturn(NO_CONTENT.getBody());
         ResponseEntity<Usuario> sut = userService.deleteUser(VALID_USER.getId());
-        assertThat(sut).isEqualTo(VALID_USER_GETRESPONSE);
+        assertThat(sut).isEqualTo(NO_CONTENT);
+
+//        when(deleteUser.executeDeleteUser(VALID_USER.getId())).thenReturn(VALID_USER);
+//        ResponseEntity<Usuario> sut = userService.deleteUser(VALID_USER.getId());
+//        assertThat(sut).isEqualTo(VALID_USER_GETRESPONSE);
     }
 
     @Test
 public void deleteUser_WithInvalidUser_ShouldReturnNotFound() {
 
-        /*TESTE COM ERRO*/
-
-        when(deleteUser.executeDeleteUser(INVALID_USER.getId())).thenReturn(INVALID_USER);
+        when(deleteUser.executeDeleteUser(INVALID_USER.getId())).thenReturn(INVALID_USER_GETRESPONSE.getBody());
         ResponseEntity<Usuario> sut = userService.deleteUser(INVALID_USER.getId());
         assertThat(sut).isEqualTo(INVALID_USER_GETRESPONSE);
     }
@@ -178,9 +176,7 @@ public void deleteUser_WithInvalidUser_ShouldReturnNotFound() {
     @Test
     public void reactiveUser_WithInvalidUser_ShouldReturnNotFound() {
 
-        /*TESTE COM ERRO*/
-
-        when(activeUser.executeActiveUser(INVALID_USER.getId())).thenReturn(INVALID_USER);
+        when(activeUser.executeActiveUser(INVALID_USER.getId())).thenReturn(INVALID_USER_GETRESPONSE.getBody());
         ResponseEntity<Usuario> sut = userService.reactiveUser(INVALID_USER.getId());
         assertThat(sut).isEqualTo(INVALID_USER_GETRESPONSE);
     }

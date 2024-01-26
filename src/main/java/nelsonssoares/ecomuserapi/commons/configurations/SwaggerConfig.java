@@ -1,4 +1,4 @@
-package nelsonssoares.ecomuserapi.configurations;
+package nelsonssoares.ecomuserapi.commons.configurations;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;

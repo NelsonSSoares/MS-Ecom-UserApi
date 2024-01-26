@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static nelsonssoares.ecomuserapi.constants.ControllersConstants.*;
+import static nelsonssoares.ecomuserapi.commons.constants.ControllersConstants.*;
 
 @Tag(name = API_TAG, description = API_DESCRIPTION)
 @RequiredArgsConstructor
