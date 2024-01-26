@@ -1,4 +1,4 @@
-package nelsonssoares.ecomuserapi.constants;
+package nelsonssoares.ecomuserapi.commons.constants;
 
 public class ControllersConstants {
     // API INFO
