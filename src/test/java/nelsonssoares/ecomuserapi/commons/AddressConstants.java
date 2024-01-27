@@ -21,6 +21,8 @@ public class AddressConstants {
 
     public static final ResponseEntity<Endereco> VALID_ADDRESS_GETRESPONSE = ResponseEntity.status(HttpStatus.OK).body(VALID_ADDRESS);
 
+    public static final ResponseEntity<Endereco> NO_CONTENT = ResponseEntity.noContent().build();
+
     public static final ResponseEntity<Endereco> INVALID_ADDRESS_GETRESPONSE = ResponseEntity.status(HttpStatus.NOT_FOUND).body(INVALID_ADDRESS);
 
     public static final ResponseEntity<EnderecoDTO> VALID_ADDRESSDTO_RESPONSE = ResponseEntity.status(HttpStatus.CREATED).body(VALID_ADDRESSDTO);
@@ -30,4 +32,5 @@ public class AddressConstants {
     public static final ResponseEntity<List<Endereco>> VALID_ADDRESS_LIST_RESPONSE = ResponseEntity.status(HttpStatus.OK).body(List.of(VALID_ADDRESS));
 
     public static final ResponseEntity<List<Endereco>> INVALID_ADDRESS_LIST_RESPONSE = ResponseEntity.status(HttpStatus.NOT_FOUND).body(List.of(INVALID_ADDRESS));
+
 }

@@ -3,7 +3,6 @@ package nelsonssoares.ecomuserapi.service;
 
 import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
-import nelsonssoares.ecomuserapi.domain.repository.UsuarioRepository;
 import nelsonssoares.ecomuserapi.services.impl.UserServiceImpl;
 import nelsonssoares.ecomuserapi.usecases.usuario.*;
 import org.junit.jupiter.api.Test;
@@ -27,31 +26,20 @@ public class TestUserService {
 
     @InjectMocks
     private UserServiceImpl userService;
-
     @Mock
     private SaveUser saveUser;
-
-    @Mock
-    private GetAllUsers getAllUsers;
-
     @Mock
     private GetUserById getUserById;
-
     @Mock
     private UpdateUser updateUser;
-
     @Mock
     private DeleteUser deleteUser;
-
     @Mock
     private GetUserByName getUserByName;
-
     @Mock
     private GetUserByCpf getUserByCpf;
-
     @Mock
     private GetUserByEmail getUserByEmail;
-
     @Mock
     private ActiveUser activeUser;
 
@@ -149,13 +137,10 @@ public class TestUserService {
     @Test
     public void deleteUser_WithValidUser_ShouldReturnNoContent() {
 
-        when(deleteUser.executeDeleteUser(VALID_USER.getId())).thenReturn(NO_CONTENT.getBody());
+        when(deleteUser.executeDeleteUser(VALID_USER.getId())).thenReturn(VALID_USER_GETRESPONSE.getBody());
         ResponseEntity<Usuario> sut = userService.deleteUser(VALID_USER.getId());
         assertThat(sut).isEqualTo(NO_CONTENT);
 
-//        when(deleteUser.executeDeleteUser(VALID_USER.getId())).thenReturn(VALID_USER);
-//        ResponseEntity<Usuario> sut = userService.deleteUser(VALID_USER.getId());
-//        assertThat(sut).isEqualTo(VALID_USER_GETRESPONSE);
     }
 
     @Test
@@ -181,21 +166,5 @@ public void deleteUser_WithInvalidUser_ShouldReturnNotFound() {
         assertThat(sut).isEqualTo(INVALID_USER_GETRESPONSE);
     }
 
-//    @Test
-//    public void getAllUsers_WithValidUser_ShouldReturnUser() {
-//        when(getAllUsers.executeAllUsers()).thenReturn(List.of(VALID_USERDTO));
-//        ResponseEntity<List<Usuario>> sut = userService.getAllUsers();
-//        assertThat(sut).isEqualTo(VALID_USER_GETRESPONSE);
-//    }
-//
-//    @Test
-//    public void getAllUsers_WithInvalidUser_ShouldReturnUser() {
-//
-//        /*TESTE COM ERRO*/
-//
-//        when(getAllUsers.executeGetAllUsers()).thenReturn(List.of(INVALID_USER));
-//        ResponseEntity<List<Usuario>> sut = userService.getAllUsers();
-//        assertThat(sut).isEqualTo(INVALID_USER_GETRESPONSE);
-//    }
-    
+
 }

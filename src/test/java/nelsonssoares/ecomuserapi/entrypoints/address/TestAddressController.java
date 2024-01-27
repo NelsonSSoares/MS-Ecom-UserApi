@@ -79,11 +79,7 @@ public class TestAddressController {
     @Test
     public void deleteAddress_withValidId_shouldReturnNoContent() throws Exception {
 
-        /*
-        TESTE FALHANDO, RETORNANDO 200 AO INVES DE 204
-         */
-
-        when(addressService.delete(1)).thenReturn(AddressConstants.VALID_ADDRESS_GETRESPONSE);
+        when(addressService.delete(1)).thenReturn(AddressConstants.NO_CONTENT);
         mockMvc.perform(MockMvcRequestBuilders.delete(API_BASE_URL +ADDRESS_ID, 1)
                 .contentType(API_PRODUCES)
                 .content(objectMapper.writeValueAsString(AddressConstants.VALID_ADDRESS)))
@@ -117,6 +113,36 @@ public class TestAddressController {
         mockMvc.perform(MockMvcRequestBuilders.get(API_BASE_URL +ADDRESS + ADDRESS_USER_ID, 666)
                 .contentType(API_PRODUCES)
                 .content(objectMapper.writeValueAsString(AddressConstants.INVALID_ADDRESS)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void updateAddress_withValidId_shouldReturnCreated() throws Exception {
+
+        when(addressService.update(1, AddressConstants.VALID_ADDRESSDTO)).thenReturn(AddressConstants.VALID_ADDRESS_RESPONSE);
+        mockMvc.perform(MockMvcRequestBuilders.put(API_BASE_URL +ADDRESS_ID, 1)
+                .contentType(API_PRODUCES)
+                .content(objectMapper.writeValueAsString(AddressConstants.VALID_ADDRESSDTO)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+
+    @Test
+    public void updateAddress_withInvalidId_shouldReturnNotFound() throws Exception {
+
+        when(addressService.update(0, AddressConstants.INVALID_ADDRESSDTO)).thenReturn(AddressConstants.INVALID_ADDRESS_GETRESPONSE);
+        mockMvc.perform(MockMvcRequestBuilders.put(API_BASE_URL +ADDRESS_ID, 0)
+                .contentType(API_PRODUCES)
+                .content(objectMapper.writeValueAsString(AddressConstants.INVALID_ADDRESSDTO)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void updateAddress_withInvalidId_shouldReturnBadRequest() throws Exception {
+
+        when(addressService.update(666, AddressConstants.INVALID_ADDRESSDTO)).thenReturn(AddressConstants.INVALID_ADDRESS_GETRESPONSE);
+        mockMvc.perform(MockMvcRequestBuilders.put(API_BASE_URL +ADDRESS_ID, 666)
+                .contentType(API_PRODUCES)
+                .content(objectMapper.writeValueAsString(AddressConstants.INVALID_ADDRESSDTO)))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
