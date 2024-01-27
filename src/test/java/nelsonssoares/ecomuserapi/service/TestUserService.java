@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-import static nelsonssoares.ecomuserapi.commons.UsuarioConstants.*;
+import static nelsonssoares.ecomuserapi.commons.UserConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;

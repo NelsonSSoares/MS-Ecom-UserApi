@@ -33,4 +33,5 @@ public class AddressConstants {
 
     public static final ResponseEntity<List<Endereco>> INVALID_ADDRESS_LIST_RESPONSE = ResponseEntity.status(HttpStatus.NOT_FOUND).body(List.of(INVALID_ADDRESS));
 
+
 }

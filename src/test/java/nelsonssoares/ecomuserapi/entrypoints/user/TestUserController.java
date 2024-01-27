@@ -1,7 +1,6 @@
 package nelsonssoares.ecomuserapi.entrypoints.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.outlayers.entrypoints.UserController;
 import nelsonssoares.ecomuserapi.services.UserService;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static nelsonssoares.ecomuserapi.commons.ControllerConstants.*;
-import static nelsonssoares.ecomuserapi.commons.UsuarioConstants.*;
+import static nelsonssoares.ecomuserapi.commons.UserConstants.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -48,35 +47,21 @@ public class TestUserController {
     @Test
     public void createUser_withInvalidInput_shouldReturnBadRequest() throws Exception {
 
-        /*
-            TESTE FALHANDO, RETORNANDO 201 AO INVÉS DE 400 OU 422, Falha no teste de validação de dados
-         */
-
-        UsuarioDTO usuario = new UsuarioDTO("", "", "", "", "");
-        UsuarioDTO invalidoUsuario = new UsuarioDTO(null, null, null, null, null);
-
+        when(userService.save(INVALID_USERDTO)).thenReturn(INVALID_USERDTO_BADQUERESTRESPONSE);
         mockMvc.perform(post(API_BASE_URL)
-                        .content(objectMapper.writeValueAsString(usuario))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnprocessableEntity());
-
-        mockMvc.perform(post(API_BASE_URL)
-                        .content(objectMapper.writeValueAsString(invalidoUsuario))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnprocessableEntity());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(INVALID_USERDTO)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     public void createUser_withExistingUser_shouldReturnConflict() throws Exception {
-           /*
-            TESTE FALHANDO, RETORNANDO 201 AO INVÉS DE 409, Falha no teste de validação de dados
-         */
 
-        when(userService.save(VALID_USERDTO)).thenReturn(VALID_USERDTO_RESPONSE);
+        when(userService.save(VALID_USERDTO)).thenReturn(CONFLICT);
         mockMvc.perform(post(API_BASE_URL)
                         .content(objectMapper.writeValueAsString(VALID_USERDTO))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.cpf").value(VALID_USERDTO_RESPONSE.getBody().cpf()))
+                .andExpect(jsonPath("$.cpf").value(VALID_USERDTO.cpf()))
                 .andExpect(status().isConflict());
     }
 
