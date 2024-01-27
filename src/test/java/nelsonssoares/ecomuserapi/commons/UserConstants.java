@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-public class UsuarioConstants {
+public class UserConstants {
     public static final UsuarioDTO VALID_USERDTO = new UsuarioDTO("Nelson","Sousa","998.767.250-76","11949793152","123deoliveira4@gmail.com");
     public static final UsuarioDTO INVALID_USERDTO = new UsuarioDTO(null,"Sousa",null,"11949793152","");
     public static final Usuario VALID_USER = new Usuario(1,"Nelson","Sousa","998.767.250-76","11949793152", LocalDate.now(),LocalDate.now(),"123deoliveira4@gmail.com", PerguntaAtivo.SIM);
@@ -29,8 +29,9 @@ public class UsuarioConstants {
 
     public static final ResponseEntity<UsuarioDTO> INVALID_USERDTO_GETRESPONSE = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     public static final ResponseEntity<Usuario> INVALID_USER_GETRESPONSE = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
+    public static final ResponseEntity<UsuarioDTO> INVALID_USERDTO_BADQUERESTRESPONSE = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(INVALID_USERDTO);
     public static final ResponseEntity<Usuario> NO_CONTENT = ResponseEntity.noContent().build();
 
+    public static final ResponseEntity<UsuarioDTO> CONFLICT = ResponseEntity.status(HttpStatus.CONFLICT).body(VALID_USERDTO);
 
 }
