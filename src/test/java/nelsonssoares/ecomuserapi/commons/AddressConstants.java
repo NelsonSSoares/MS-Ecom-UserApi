@@ -13,7 +13,7 @@ public class AddressConstants {
     public static final EnderecoDTO VALID_ADDRESSDTO = new EnderecoDTO(1,"","Rua dos Bobos","0","","02041-060","JD. São Paulo","São Paulo","SP","BRASIL", PerguntaAtivo.SIM);
     public static final EnderecoDTO INVALID_ADDRESSDTO = new EnderecoDTO(0,"","","0","","02041-060","JD. São Paulo","São Paulo","SP","Brasil", PerguntaAtivo.SIM);
 
-    public static final Endereco VALID_ADDRESS = new Endereco(402,"","Santo Antonio","928","Adega de Bebidas","01314-001","Bela-Vista","São Paulo","SP", Pais.BRASIL, 2, PerguntaAtivo.NAO);
+    public static final Endereco VALID_ADDRESS = new Endereco(402,"","Santo Antonio","928","Adega de Bebidas","01314-001","Bela-Vista","São Paulo","SP", Pais.BRASIL, 1, PerguntaAtivo.NAO);
 
     public static final Endereco INVALID_ADDRESS = new Endereco(0,"","","928","Adega de Bebidas","01314-001","Bela-Vista","São Paulo","SP", Pais.BRASIL, 666, PerguntaAtivo.NAO);
 

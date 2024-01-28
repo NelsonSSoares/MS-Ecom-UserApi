@@ -14,4 +14,5 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Integer> {
 
     @Query(value = "SELECT e.* FROM endereco e JOIN usuario u ON e.usuario_id = u.id WHERE u.ativo = 'SIM'", nativeQuery = true)
     List<Endereco> findActiveAddresses(Pageable paginacao);
+
 }

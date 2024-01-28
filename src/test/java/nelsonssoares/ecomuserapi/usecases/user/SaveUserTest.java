@@ -30,9 +30,8 @@ public class SaveUserTest {
 
     @Test
     public void createUser_WithValidUser_ShouldReturnUser() {
-
-        when(usuarioRepository.save(VALID_USER)).thenReturn(VALID_USER);
         when(objectMapper.convertValue(UsuarioDTO.class, Usuario.class)).thenReturn(VALID_USER);
+        when(usuarioRepository.save(VALID_USER)).thenReturn(VALID_USER);
         UsuarioDTO sut = saveUser.executeSaveUser(VALID_USERDTO);
         assertThat(sut).isEqualTo(VALID_USER);
     }
