@@ -1,4 +1,4 @@
-package nelsonssoares.ecomuserapi.usecases.endereco;
+package nelsonssoares.ecomuserapi.usecases.address;
 
 import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.entities.Endereco;
@@ -8,27 +8,29 @@ import nelsonssoares.ecomuserapi.domain.repository.EnderecoRepository;
 import nelsonssoares.ecomuserapi.domain.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GetAddressById {
-    private final EnderecoRepository enderecoRepository;
+public class DeleteAddress {
     private final UsuarioRepository usuarioRepository;
+    private final EnderecoRepository enderecoRepository;
 
-    public Endereco executeAddressById(Integer id) {
+    @Transactional
+    public Endereco executeDeteleAddress(Integer id) {
         Optional<Endereco> endereco = enderecoRepository.findById(id);
         if (endereco.isEmpty()) {
             return null;
         }
-        Optional<Usuario> usuario = usuarioRepository.findById(endereco.get().getUsuarioId());
-        if(usuario.get().getAtivo().equals(PerguntaAtivo.NAO)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço não encontrado!");
+        Endereco adress = endereco.get();
+        Optional<Usuario> usuario = usuarioRepository.findById(adress.getUsuarioId());
+        if (usuario.get().getAtivo().equals(PerguntaAtivo.NAO) || usuario.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
         }
-        return endereco.get();
-
+        enderecoRepository.deleteById(id);
+        return adress;
     }
-
 }

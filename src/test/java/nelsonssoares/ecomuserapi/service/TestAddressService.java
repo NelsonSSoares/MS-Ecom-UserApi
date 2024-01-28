@@ -3,14 +3,12 @@ package nelsonssoares.ecomuserapi.service;
 import nelsonssoares.ecomuserapi.commons.AddressConstants;
 import nelsonssoares.ecomuserapi.domain.entities.Endereco;
 import nelsonssoares.ecomuserapi.services.impl.AddressServiceImpl;
-import nelsonssoares.ecomuserapi.usecases.endereco.*;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
+import nelsonssoares.ecomuserapi.usecases.address.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

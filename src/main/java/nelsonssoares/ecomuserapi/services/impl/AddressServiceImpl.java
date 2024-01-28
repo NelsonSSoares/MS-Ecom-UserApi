@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nelsonssoares.ecomuserapi.domain.dtos.EnderecoDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Endereco;
 import nelsonssoares.ecomuserapi.services.AddressService;
-import nelsonssoares.ecomuserapi.usecases.endereco.*;
+import nelsonssoares.ecomuserapi.usecases.address.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
