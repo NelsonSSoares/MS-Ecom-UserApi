@@ -4,7 +4,7 @@ package nelsonssoares.ecomuserapi.service;
 import nelsonssoares.ecomuserapi.domain.dtos.UsuarioDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
 import nelsonssoares.ecomuserapi.services.impl.UserServiceImpl;
-import nelsonssoares.ecomuserapi.usecases.usuario.*;
+import nelsonssoares.ecomuserapi.usecases.user.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

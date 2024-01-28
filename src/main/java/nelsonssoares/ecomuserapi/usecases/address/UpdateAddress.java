@@ -1,6 +1,8 @@
-package nelsonssoares.ecomuserapi.usecases.endereco;
+package nelsonssoares.ecomuserapi.usecases.address;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import nelsonssoares.ecomuserapi.domain.dtos.EnderecoDTO;
 import nelsonssoares.ecomuserapi.domain.entities.Endereco;
 import nelsonssoares.ecomuserapi.domain.entities.Usuario;
 import nelsonssoares.ecomuserapi.domain.entities.enums.PerguntaAtivo;
@@ -15,22 +17,31 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteAddress {
+public class UpdateAddress {
+
     private final UsuarioRepository usuarioRepository;
     private final EnderecoRepository enderecoRepository;
+    private final ObjectMapper objectMapper;
 
     @Transactional
-    public Endereco executeDeteleAddress(Integer id) {
+    public Endereco executeUpdateAddress(Integer id, EnderecoDTO endDto) {
         Optional<Endereco> endereco = enderecoRepository.findById(id);
-        if (endereco.isEmpty()) {
+
+        if(endereco.isEmpty() ){
             return null;
         }
         Endereco adress = endereco.get();
         Optional<Usuario> usuario = usuarioRepository.findById(adress.getUsuarioId());
-        if (usuario.get().getAtivo().equals(PerguntaAtivo.NAO) || usuario.isEmpty()) {
+
+        if(usuario.get().getAtivo().equals(PerguntaAtivo.NAO) || usuario.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
         }
-        enderecoRepository.deleteById(id);
-        return adress;
+
+        Endereco enderecoAtualizado = objectMapper.convertValue(endDto, Endereco.class);
+        enderecoAtualizado.setId(id);
+        enderecoAtualizado.setEnderecoPadrao(endDto.enderecoPadrao());
+        enderecoAtualizado.setUsuarioId(adress.getUsuarioId());
+        enderecoRepository.save(enderecoAtualizado);
+        return enderecoAtualizado;
     }
 }

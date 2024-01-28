@@ -1,4 +1,4 @@
-package nelsonssoares.ecomuserapi.usecases.endereco;
+package nelsonssoares.ecomuserapi.usecases.address;
 
 
 import lombok.RequiredArgsConstructor;
