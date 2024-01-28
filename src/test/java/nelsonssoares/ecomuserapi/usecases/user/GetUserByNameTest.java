@@ -36,7 +36,7 @@ public class GetUserByNameTest {
     }
 
     @Test
-    public void getUserByName_WithInvalidName_ShouldReturnNull() {
+    public void getUserByName_WithInvalidName_ShouldReturnEmptyList() {
         when(usuarioRepository.findByNome(INCORRECT_USER.getNome())).thenReturn(EMPTY_USER_LIST);
         List<UsuarioDTO> sut = getUserByName.executeUserByName(INCORRECT_USER.getNome());
         assertEquals(EMPTY_USER_LIST, sut);

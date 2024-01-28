@@ -21,6 +21,8 @@ public class DeleteAddress {
 
     @Transactional
     public Endereco executeDeteleAddress(Integer id) {
+        //metodo deve retornar apenas 204
+
         Optional<Endereco> endereco = enderecoRepository.findById(id);
         if (endereco.isEmpty()) {
             return null;
