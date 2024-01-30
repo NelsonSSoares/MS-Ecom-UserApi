@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+
 public class GetUserByEmailTest {
 
     @InjectMocks
@@ -28,6 +30,7 @@ public class GetUserByEmailTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
     public void getUserByEmail_WithValidEmail_ShouldReturnUser() {
         when(usuarioRepository.findByEmail(VALID_USER.getEmail())).thenReturn(Optional.of(VALID_USER));
         when(objectMapper.convertValue(VALID_USER, UsuarioDTO.class)).thenReturn(VALID_USERDTO);

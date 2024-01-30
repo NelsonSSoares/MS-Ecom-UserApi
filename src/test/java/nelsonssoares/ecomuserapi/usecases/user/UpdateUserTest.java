@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import static javax.management.Query.eq;
 import static nelsonssoares.ecomuserapi.commons.UserConstants.*;
@@ -30,6 +31,7 @@ public class UpdateUserTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @Transactional
     public void updateUser_WithValidUser_ShouldReturnUser() {
         when(usuarioRepository.save(any())).thenReturn(VALID_USER);
         when(objectMapper.convertValue(UsuarioDTO.class, Usuario.class)).thenReturn(VALID_USER);
