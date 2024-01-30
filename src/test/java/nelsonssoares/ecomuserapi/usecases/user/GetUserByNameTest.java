@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class GetUserByNameTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
     public void getUserByName_WithValidName_ShouldReturnUser() {
         when(usuarioRepository.findByNome(VALID_USER.getNome())).thenReturn(VALID_USERLIST_GETRESPONSE.getBody());
         when(objectMapper.convertValue(VALID_USER, UsuarioDTO.class)).thenReturn(VALID_USERDTO);

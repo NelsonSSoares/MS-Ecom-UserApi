@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class UpdateAddressTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @Transactional
     public void executeUpdateAddress_WithValidAddress_ShouldReturnAddress() {
         when(enderecoRepository.save(VALID_ADDRESS)).thenReturn(VALID_ADDRESS);
         when(usuarioRepository.findById(VALID_ADDRESSDTO.usuarioId())).thenReturn(Optional.of(VALID_USER));

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ public class ActiverUserTest {
     private UsuarioRepository usuarioRepository;
 
     @Test
+    @Transactional
     public void activeUser_WithValidId_ShouldReturnVoid() {
         when(usuarioRepository.findById(VALID_USER.getId())).thenReturn(Optional.of(VALID_USER));
         activeUser.executeActiveUser(VALID_USER.getId());

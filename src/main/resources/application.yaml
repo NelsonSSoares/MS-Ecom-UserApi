@@ -7,6 +7,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: 'true'
 spring:
+  spring:
+    profiles:
+      active: dev #{PROFILE_ACTIVE}
   jpa:
     properties:
       hibernate:

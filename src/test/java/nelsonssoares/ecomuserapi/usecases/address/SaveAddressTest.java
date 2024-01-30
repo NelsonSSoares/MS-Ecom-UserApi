@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -35,6 +36,7 @@ public class SaveAddressTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @Transactional
     public void saveAddress_WithValidAddress_ShouldReturnAddress() {
         when(enderecoRepository.save(VALID_ADDRESS)).thenReturn(VALID_ADDRESS);
         when(objectMapper.convertValue(VALID_ADDRESSDTO, Endereco.class)).thenReturn(VALID_ADDRESS);

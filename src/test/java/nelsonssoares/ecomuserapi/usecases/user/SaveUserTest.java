@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import static nelsonssoares.ecomuserapi.commons.UserConstants.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -29,6 +30,7 @@ public class SaveUserTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @Transactional
     public void createUser_WithValidUser_ShouldReturnUser() {
         when(objectMapper.convertValue(UsuarioDTO.class, Usuario.class)).thenReturn(VALID_USER);
         when(usuarioRepository.save(VALID_USER)).thenReturn(VALID_USER);

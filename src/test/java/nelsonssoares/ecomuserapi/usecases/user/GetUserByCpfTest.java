@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class GetUserByCpfTest {
     private UsuarioRepository usuarioRepository;
 
     @Test
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
     public void getUserByCpf_WithValidCpf_ShouldReturnUser() {
         when(usuarioRepository.findByCpf(VALID_USER.getCpf())).thenReturn(Optional.of(VALID_USER));
         Usuario sut = getUserByCpf.executeUserByCpf(VALID_USER.getCpf());
