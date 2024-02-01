@@ -42,6 +42,7 @@ public class UpdateAddress {
         enderecoAtualizado.setEnderecoPadrao(endDto.enderecoPadrao());
         enderecoAtualizado.setUsuarioId(adress.getUsuarioId());
         enderecoRepository.save(enderecoAtualizado);
+        System.out.println(enderecoAtualizado);
         return enderecoAtualizado;
     }
 }
