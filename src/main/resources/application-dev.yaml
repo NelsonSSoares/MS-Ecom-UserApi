@@ -15,4 +15,4 @@ server:
   error:
     include-stacktrace: never
     include-exception: 'false'
-  port: ${PORT:0} #8080
+  port:  #8080
