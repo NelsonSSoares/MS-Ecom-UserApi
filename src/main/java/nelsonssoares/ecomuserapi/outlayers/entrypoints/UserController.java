@@ -131,7 +131,7 @@ public class UserController {
     })
     @GetMapping(value = NAME)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<UsuarioDTO>> findByName(@PathVariable("nome") String nome) {
+    public ResponseEntity<List<UsuarioDTO>> findByName(@RequestParam("nome") String nome) {
         return userService.findByName(nome);
     }
 
