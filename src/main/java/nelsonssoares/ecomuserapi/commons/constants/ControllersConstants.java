@@ -16,7 +16,7 @@ public class ControllersConstants {
     public static final String ID = "/{id}";
     public static final String CPF = "/cpf/{cpf}";
 
-    public static final String NAME = "/nome/{nome}";
+    public static final String NAME = "/nome";
     public static final String ACTIVE = "/active/{id}";
 
     // ADDRESS ENDPOINTS
