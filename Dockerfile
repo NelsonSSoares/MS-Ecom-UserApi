@@ -1,4 +1,5 @@
-FROM adoptopenjdk:17-jre-hotspot
-EXPOSE 8080
-ADD build/libs/EcomUserApi.jar EcomUserApi.jar
-ENTRYPOINT ["java", "-jar", "EcomUserApi.jar"]
+FROM openjdk:17
+WORKDIR /app
+COPY ./build/libs/EcomShoppingApi-0.0.1-SNAPSHOT-plain.jar ms-ecom-shoppingapi.jar
+EXPOSE 8761
+ENTRYPOINT java -jar ms-ecom-shoppingapi.jar
